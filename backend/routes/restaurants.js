@@ -9,13 +9,13 @@ router.route('/').get((req, res) => {
 
 router.route('/add').post((req, res) => {
     const name = req.body.name;
-    // const location = req.body.location;
-    // const food_type = req.body.food_type;
+    const location = req.body.location;
+    const food_type = req.body.food_type;
     
     const newRestaurant = new Restaurant({
-        name
-        // location,
-        // food_type,
+        name,
+        location,
+        food_type,
     });
     
 
@@ -23,5 +23,11 @@ router.route('/add').post((req, res) => {
         .then(() => res.json('Restaurant added!'))
         .catch(err => res.status(400).json('Error: ' + err));
 });
+
+    router.route('/:id').get((req, res) => {
+        Restaurant.findById(req.params.id)
+            .then(restaurant => res.json(restaurant))
+            .catch(err => res.status(400).json('Error: ' + err));
+    });
 
 module.exports = router;
